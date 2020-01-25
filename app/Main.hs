@@ -31,7 +31,9 @@ main = do
   art'                      <- loadArt
   timeMultiplier            <- newMVar 1
   (NE.fromList -> wordList) <- T.words <$> TIO.readFile "word-list.txt"
+  vty <- loadVty
   withAsync (timer timeMultiplier bChan) . const . void $ customMain
+    vty
     loadVty
     (Just bChan)
     app
